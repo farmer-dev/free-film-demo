@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React Redux App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <script>
+      // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+      const SCALING_AMPLIFIER = 2
+      const MAX_SCALING = 1
+      const MIN_SCALING = 0.75
+  
+      function getBreakPointMaxWidth(width) {
+        const breakPointLayouts = [768, 1024, 1440]
+        let result = breakPointLayouts[breakPointLayouts.length - 1]
+        for (const breakPoint of breakPointLayouts) {
+  
+          if (width <= breakPoint) {
+            result = breakPoint
+            break
+          }
+        }
+        return result
+      }
+  
+      function getScalingPercentage(width) {
+  
+        const pxAlignedWidth150 = parseInt(width / 150) * 150
+  
+        const breakPointMaxWidth = getBreakPointMaxWidth(width)
+  
+        const scalingPercent = (pxAlignedWidth150 / breakPointMaxWidth) * SCALING_AMPLIFIER
+        return scalingPercent
+      }
+      function getScalingMaxMin(scalingValue) {
+        if (scalingValue > MAX_SCALING) {
+          return MAX_SCALING
+        }
+        if (scalingValue < MIN_SCALING) {
+          return MIN_SCALING
+        }
+        return scalingValue
+      }
+      function setScalingPercent() {
+        const widthScaling = window.innerWidth
+        const scalingPercentCalc = getScalingPercentage(widthScaling)
+        const scalingPercent = getScalingMaxMin(scalingPercentCalc)
+        const styleDoc = document.documentElement.style
+        const oldWidthScaling = styleDoc.getPropertyValue('--widthScaling') || 0
+        if (oldWidthScaling == widthScaling) {
+          return
+        }
+  
+        styleDoc.setProperty('--scaling', scalingPercent)
+        styleDoc.setProperty('--widthScaling', widthScaling)
+      }
+  
+  
+      function setVh() {
+        let height =
+          window.document.documentElement.clientHeight || window.innerHeight
+        let vh = height * 0.01
+        // Then we set the value in the --vh custom property to the root of the document
+        document.documentElement.style.setProperty('--vh', vh + 'px')
+        document.documentElement.style.setProperty('--ih', height + 'px')
+      }
+      setVh()
+      setScalingPercent()
+      var timeVh = null
+      window.addEventListener('resize', () => {
+        if (timeVh) {
+          clearTimeout(timeVh)
+        }
+        timeVh = setTimeout(function () {
+          setVh()
+        }, 500)
+        setScalingPercent()
+      })
+    </script>
+  </body>
+</html>

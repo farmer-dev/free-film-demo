@@ -1,0 +1,6 @@
+@host = http://www.omdbapi.com
+@apikey = 2e6d2280
+
+### get profile
+# @name get moives
+GET {{host}}/?apikey={{apikey}}&s=batman&page=1
