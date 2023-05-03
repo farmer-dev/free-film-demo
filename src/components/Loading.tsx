@@ -16,7 +16,7 @@ export const Loading = ({ role }: { role?: string }) => {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 999999,
-        background: 'rgba(0,0,0.1)',
+        background: 'rgba(0,0,0,0.5)',
       }}
     >
       <CircularProgress />

@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { BASE_URL, OMDb_API } from './constants';
-import MockAdapter from 'axios-mock-adapter';
 
 // const mock = new MockAdapter(axios, { delayResponse: 1000 });
 

@@ -16,7 +16,10 @@ export const useLoadMore = <T>(url: string | null, params?: object) => {
         return firstPage.Response ?? false;
       },
       getNextPageParam: (lastPage, pages) => {
-        return (lastPage?.Response as unknown as string).toLocaleLowerCase() === 'true'
+        const isLastPage = lastPage?.Search.length < 10;
+        return isLastPage
+          ? false
+          : (lastPage?.Response as unknown as string).toLocaleLowerCase() === 'true'
           ? pages.length + 1
           : false;
       },
