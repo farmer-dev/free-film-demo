@@ -1,5 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { BASE_URL, OMDb_API } from './constants';
+import MockAdapter from 'axios-mock-adapter';
+
+// const mock = new MockAdapter(axios, { delayResponse: 1000 });
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -10,7 +13,7 @@ export const axiosInstance: AxiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
+axiosInstance?.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     config.params = config.params || {};
@@ -26,7 +29,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Add a response interceptor
-axiosInstance.interceptors.response.use(
+axiosInstance?.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data

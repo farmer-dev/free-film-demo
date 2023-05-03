@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-// import { MockedFunction } from 'ts-jest';
+// jest.mock('axios');
 
 const getMockedData = (originalUrl: string, mockData: { [url: string]: any }, type: string) => {
   const foundUrl = Object.keys(mockData).find((url) => originalUrl.match(new RegExp(`${url}$`)));
@@ -19,5 +19,5 @@ export const mockAxiosGetRequests = <T extends any>(mockData: {
   [url: string]: T;
 }): jest.MockedFunction<AxiosInstance> => {
   // @ts-ignore
-  return axios.get.mockImplementation((originalUrl) => getMockedData(originalUrl, mockData, 'GET'));
+  return axios.get.mockResolvedValue((originalUrl) => getMockedData(originalUrl, mockData, 'GET'));
 };

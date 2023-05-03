@@ -1,12 +1,13 @@
-import { useAppSelector } from '../app/hooks';
-import { useGetMovieList } from '../apiHooks';
+import { useAppSelector } from 'app/hooks';
+import { useGetMovieList } from 'apiHooks';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Movie, MovieList, selectKeyword, selectSearchFilter } from '../components';
+import { Loading, Movie, MovieList, selectKeyword, selectSearchFilter } from 'components';
 import debounce from 'lodash/debounce';
 import { Button } from '@mui/material';
-import { pushNotification } from '../utils/notifications';
+import { pushNotification } from 'utils/notifications';
 import lodash from 'lodash';
+import dataTestIds from './__test__/data-test-ids';
 
 type Props = {};
 
@@ -21,7 +22,6 @@ export const HomePage = (props: Props) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    status,
     error,
     ...result
   } = useGetMovieList({
@@ -39,6 +39,7 @@ export const HomePage = (props: Props) => {
       pushNotification(message, 'error');
     }
   }, [error]);
+
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {
       fetchNextPage();
@@ -46,15 +47,15 @@ export const HomePage = (props: Props) => {
   }, [fetchNextPage, inView, isFetchingNextPage, hasNextPage]);
 
   if (isLoading) {
-    return <h1>...</h1>;
+    return <Loading role={dataTestIds.homePage.loading} />;
   }
   return (
-    <div>
+    <div data-testid={dataTestIds.homePage.root}>
       <MovieList
         movieList={lodash.flatten((list?.pages || []).map((page) => page?.Search || []))}
       />
       {hasNextPage && (
-        <Button ref={ref} onClick={() => {}} disabled>
+        <Button data-testid={dataTestIds.homePage.loadMore} ref={ref} onClick={() => {}} disabled>
           {isFetchingNextPage ? 'Loading more...' : ''}
         </Button>
       )}

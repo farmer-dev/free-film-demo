@@ -7,7 +7,7 @@ type Props = {};
 export const Footer = (props: Props) => {
   const theme = useTheme();
   return (
-    <footer>
+    <footer data-testid="footer">
       <Grid p={1.5} container sx={{ backgroundColor: theme.palette.common.black }}>
         <Grid item xs={4} md={2} sx={{ flexShrink: 0 }}>
           <Logo />

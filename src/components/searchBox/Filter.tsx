@@ -1,20 +1,23 @@
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { SearchBox } from './SearchBox';
 import { useDispatch } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { debounce } from 'lodash';
 import { changeKeyword, updateSearchFilter } from './searchBoxSlice';
+import { pageRoutes } from '../../routes';
+import { isMatchRoute } from '../../utils/router';
 
 const DEBOUNCE_DELAY = 1500;
 
 const filterType = ['movie', 'series', 'episode'];
+
 export const Filter = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = isMatchRoute(pageRoutes.home, pathname);
   const { control, handleSubmit, formState, watch, getValues, register } = useForm({
     defaultValues: {
       keyword: '',
@@ -23,14 +26,23 @@ export const Filter = () => {
   });
 
   const dispatch = useDispatch();
+
+  const navigateToHome = useCallback(() => {
+    navigate(pageRoutes.home);
+  }, [isHomePage]);
+
   const debouncedChangeHandler = useMemo(
-    () => debounce((values) => dispatch(updateSearchFilter(values)), DEBOUNCE_DELAY),
+    () =>
+      debounce((values) => {
+        navigateToHome();
+        return dispatch(updateSearchFilter(values));
+      }, DEBOUNCE_DELAY),
     []
   );
-
   useEffect(() => {
-    debouncedChangeHandler(getValues());
-  }, [watch()]);
+    const subscription = watch((value, { name, type }) => debouncedChangeHandler(value));
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   useEffect(() => {
     return () => {
@@ -58,6 +70,7 @@ export const Filter = () => {
                 // value={age}
                 {...field}
                 label="Fitler"
+                sx={{ textTransform: 'capitalize' }}
                 // onChange={handleChange}
               >
                 <MenuItem value="">

@@ -7,13 +7,9 @@ import { Logo } from './Logo';
 
 export function SearchAppBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ justifyContent: 'flex-start' }}>
-        <Toolbar>
-          <Logo />
-          <Filter />
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <Toolbar>
+      <Logo />
+      <Filter />
+    </Toolbar>
   );
 }

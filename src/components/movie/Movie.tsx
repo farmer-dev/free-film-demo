@@ -1,7 +1,9 @@
-import { IMovie } from '@common';
+import { IMovie } from 'common';
 import { styled, alpha } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { Poster } from './Poster';
+import { pathToUrl } from 'utils/router';
+import { pageRoutes } from 'routes';
 
 type Props = {
   key?: string;
@@ -17,7 +19,7 @@ const MoveStyled = styled('div')`
     text-decoration: none;
   }
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.03);
     cursor: pointer;
   }
   .movie {
@@ -38,8 +40,8 @@ export const Movie = ({ movie }: Props) => {
   return (
     <MoveStyled className="movie">
       {/* <h3>{movie.Title}</h3> */}
-      <Link to={`/movie/${movie.imdbID}`}>
-        <Poster poster={movie.Poster} />
+      <Link to={pathToUrl(pageRoutes.movieDetail, { id: movie.imdbID })}>
+        <Poster poster={movie.Poster || ''} />
         <div className="movie__footer">
           <h4 className="movie--title">{movie.Title}</h4>
         </div>

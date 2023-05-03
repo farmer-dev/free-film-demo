@@ -1,4 +1,4 @@
-import { GetInfinitePagesInterface } from '@/common/interfaces';
+import { GetInfinitePagesInterface } from 'common/interfaces';
 import { fetcher, QueryKeyT } from '../utils/reactQuery';
 import { useInfiniteQuery, useQueryClient, UseQueryOptions, useQuery } from 'react-query';
 

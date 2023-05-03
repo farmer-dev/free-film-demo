@@ -1,4 +1,4 @@
-import { axiosInstance } from '../common/axiosClient';
+import { axiosInstance } from 'common/axiosClient';
 
 export const api = {
   get: <T>(url: string, params?: object) => axiosInstance.get<T>(url, { ...params }),

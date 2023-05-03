@@ -1,9 +1,9 @@
 export interface IMovie {
-  Title: string;
-  Year: string;
+  Title?: string;
+  Year?: string;
   imdbID: string;
-  Type: string;
-  Poster: string;
+  Type?: string;
+  Poster?: string;
 }
 
 export interface IMovieDetail extends IMovie {

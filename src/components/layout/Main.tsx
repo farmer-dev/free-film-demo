@@ -1,10 +1,14 @@
 import { Box } from '@mui/material';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 type Props = {
-  children: any;
+  children?: ReactElement;
 };
 
 export const Main = ({ children }: Props) => {
-  return <Box sx={{ minHeight: '80vh' }}>{children}</Box>;
+  return (
+    <Box data-testid="main" component={'main'} sx={{ minHeight: '80vh' }}>
+      {children}
+    </Box>
+  );
 };

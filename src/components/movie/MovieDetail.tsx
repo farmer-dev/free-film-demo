@@ -1,7 +1,8 @@
-import { IMovieDetail } from '@common';
+import { IMovieDetail } from 'common';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { Poster } from './Poster';
+import dataTestIds from './__test__/data-test-ids';
 
 type Props = {
   movie: IMovieDetail;
@@ -37,7 +38,7 @@ export const InfoRow = ({ label, value }: { label: string; value: string }) => {
 export const MovieDetail = ({ movie }: Props) => {
   const theme = useTheme();
   return (
-    <Box>
+    <Box data-testid={dataTestIds.movieDetail.component}>
       <Box
         mt={theme.spacing(1)}
         sx={{
@@ -59,7 +60,7 @@ export const MovieDetail = ({ movie }: Props) => {
         </Typography>
         <Grid container flexGrow={1} p={2} spacing={{ xs: 1, sm: 1.5 }}>
           <Grid item xs={12} sm={2}>
-            <Poster poster={movie.Poster} />
+            <Poster poster={movie.Poster || ''} />
           </Grid>
           <Grid item xs={12} sm={10}>
             <Box

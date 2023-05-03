@@ -3,6 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import dataTestIds from './__test__/data-test-ids';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,15 +51,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export function SearchBox({ field }: any) {
   return (
-    <Search sx={{ width: '100%' }}>
+    <Search data-testid={dataTestIds.searchBox.root} sx={{ width: '100%' }}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        {...field}
         sx={{ flexGrow: 1 }}
         placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
+        inputProps={{ 'aria-label': 'search', ...field }}
       />
     </Search>
   );

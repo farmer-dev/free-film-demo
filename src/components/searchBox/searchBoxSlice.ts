@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '@/app/store';
+import { RootState, AppThunk } from 'app/store';
 
 export interface SearchBoxState {
   keyword: string;
   filter: string;
 }
 
-const initialState: SearchBoxState = {
+export const initialState: SearchBoxState = {
   keyword: '',
   filter: '',
 };
